@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Bypass BPLA</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Главный экран -->
+        <div id="mainScreen" class="screen active">
+            <h1 class="title">Bypass BPLA</h1>
+            <div class="button-group">
+                <button id="instructionBtn" class="btn btn-primary">
+                    Инструкция: перед началом
+                </button>
+                <button id="bypassBtn" class="btn btn-secondary" disabled>
+                    Бесплатный обход
+                </button>
+            </div>
+        </div>
+
+        <!-- Экран инструкции -->
+        <div id="instructionScreen" class="screen">
+            <div class="screen-header">
+                <button id="backFromInstruction" class="back-btn">← Назад</button>
+                <h2 class="screen-title">Инструкция</h2>
+            </div>
+            <div class="instruction-content">
+                <p class="instruction-text">
+                    Введите следующий DNS в настройки вашего телефона:
+                </p>
+                <div class="dns-box">
+                    <code id="randomDns" class="dns-code"></code>
+                    <button id="copyDnsBtn" class="copy-btn">Копировать</button>
+                </div>
+                <div class="instruction-steps">
+                    <p><strong>Как изменить DNS на Android:</strong></p>
+                    <ol>
+                        <li>Откройте "Настройки" → "Подключения" → "Wi‑Fi"</li>
+                        <li>Нажмите на текущую сеть Wi‑Fi</li>
+                        <li>Выберите "Изменить" → "Дополнительно"</li>
+                        <li>В разделе "IP-настройки" выберите "Статический"</li>
+                        <li>Введите DNS в поле "DNS 1"</li>
+                    </ol>
+                    <p><strong>Как изменить DNS на iOS:</strong></p>
+                    <ol>
+                        <li>Откройте "Настройки" → "Wi‑Fi"</li>
+                        <li>Нажмите на "i" рядом с текущей сетью</li>
+                        <li>Прокрутите вниз и нажмите "Настроить DNS"</li>
+                        <li>Выберите "Вручную" и добавьте DNS</li>
+                    </ol>
+                </div>
+            </div>
+            <button id="continueBtn" class="btn btn-primary btn-continue">
+                Продолжить
+            </button>
+        </div>
+
+        <!-- Экран со списком VPN -->
+        <div id="vpnListScreen" class="screen">
+            <div class="screen-header">
+                <button id="backFromVpnList" class="back-btn">← Назад</button>
+                <h2 class="screen-title">Список VPN</h2>
+            </div>
+            <div id="vpnList" class="vpn-list">
+                <!-- VPN карточки будут добавлены через JS -->
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

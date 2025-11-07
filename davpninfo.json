@@ -57,8 +57,7 @@
           "Нет"
         ],
         "programs": [
-          "Happ",
-          "V2RayTun"
+          "Happ"
         ],
         "free_period": "3 дня",
         "tariffs": [
@@ -76,6 +75,7 @@
   ]
 
 }
+
 
 
 

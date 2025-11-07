@@ -11,10 +11,11 @@
         "MegaFon (Skartel)",
         "SberMobile",
         "Beeline",
-        "T-Mobile"
+        "T-Mobile",
+        "T2 (с DNS и регионом белый список №1 либо Сербия)
       ],
       "operators_without": [
-        "t2 (tele2)"
+        "Нет"
       ],
       "programs": [
         "Happ",
@@ -45,7 +46,7 @@
         "id": 1,
         "name": "Free Github VPN",
         "ref-link": "data:text/html,<h1>На доработке</h1>",
-        "success_rate": "15%",
+        "success_rate": "5%",
         "operators_with_bypass": [
           "Неизвестно"
         ],
@@ -63,3 +64,4 @@
   ]
 
 }
+

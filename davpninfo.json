@@ -3,12 +3,15 @@
     {
       "id": 0,
       "name": "HimikVPN",
-      "ref-link": "https://t.me/HimikVPN_bot?start=7254903071",
+      "ref-link": "https://t.me/HimikVPN_bot?start=1473448914",
       "success_rate": "85%",
       "operators_with_bypass": [
         "MTS",
         "Yota (Skartel)",
         "MegaFon (Skartel)",
+        "Летай (Таттелеком)",
+        "VTB Mobile",
+        "Volga",
         "SberMobile",
         "Beeline",
         "T-Mobile",
@@ -64,5 +67,6 @@
   ]
 
 }
+
 
 

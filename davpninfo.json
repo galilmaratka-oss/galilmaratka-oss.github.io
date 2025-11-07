@@ -47,26 +47,36 @@
     },
     {
         "id": 1,
-        "name": "Free Github VPN",
-        "ref-link": "data:text/html,<h1>На доработке</h1>",
-        "success_rate": "5%",
+        "name": "AtlantaVPN",
+        "ref-link": "https://t.me/AtlantaVPN_bot?start=ref_1473448914",
+        "success_rate": "90%",
         "operators_with_bypass": [
-          "Неизвестно"
+          "Все"
         ],
         "operators_without": [
-          "Неизвестно"
+          "Нет"
         ],
         "programs": [
           "Happ",
           "V2RayTun"
         ],
-        "free_period": "Бесконечно",
-        "tariffs": [],
-        "comment": "не факт, что получиться, зато 255 серверов"
+        "free_period": "3 дня",
+        "tariffs": [
+          {
+            "period": "15GB",
+            "price": "99 руб",
+          },
+          {
+            "period": "30GB",
+            "price": "198 руб"
+          }
+        ],
+        "comment": "оплачивается по-гигабайтно, ОООЧЕНЬ многт серверов, реферал дает 50 рублей на баланс"
       }
   ]
 
 }
+
 
 
 

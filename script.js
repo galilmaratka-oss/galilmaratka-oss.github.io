@@ -95,9 +95,10 @@ function renderVpnList() {
         return;
     }
     
-    state.vpnList.forEach(vpn => {
+    state.vpnList.forEach((vpn, index) => {
         const card = document.createElement('div');
         card.className = 'vpn-card';
+        card.dataset.vpnId = vpn.id || index;
         
         const operatorsWithBypass = Array.isArray(vpn.operators_with_bypass) 
             ? vpn.operators_with_bypass 
@@ -110,61 +111,105 @@ function renderVpnList() {
             : vpn.programs || 'Не указано';
         
         card.innerHTML = `
-            <div class="vpn-header">
-                <div class="vpn-name">${escapeHtml(vpn.name)}</div>
-                <div class="vpn-success-rate">${escapeHtml(vpn.success_rate)}</div>
-            </div>
-            <div class="vpn-info">
-                <div class="vpn-info-item">
-                    <strong>Программы:</strong> ${escapeHtml(programs)}
+            <div class="vpn-card-header">
+                <div class="vpn-card-header-left">
+                    <div class="vpn-collapsed-content">
+                        <div class="vpn-collapsed-info">
+                            <div class="vpn-collapsed-name">${escapeHtml(vpn.name)}</div>
+                            <div class="vpn-collapsed-period">Бесплатный период: ${escapeHtml(vpn.free_period || 'Не указано')}</div>
+                        </div>
+                    </div>
                 </div>
-                <div class="vpn-info-item">
-                    <strong>Бесплатный период:</strong> ${escapeHtml(vpn.free_period || 'Не указано')}
+                <div class="vpn-card-header-right">
+                <button class="vpn-expand-btn">▼</button>
+                    <button class="vpn-connect-btn" data-ref-link="${escapeHtml(vpn['ref-link'] || '')}">
+                        Переход в бота
+                    </button>
                 </div>
-                ${operatorsWithBypass.length > 0 ? `
-                    <div class="vpn-info-item">
-                        <strong>Операторы с обходом:</strong>
-                        <div class="vpn-operators">
-                            ${operatorsWithBypass.map(op => 
-                                `<span class="operator-tag success">${escapeHtml(op)}</span>`
-                            ).join('')}
-                        </div>
-                    </div>
-                ` : ''}
-                ${operatorsWithout.length > 0 ? `
-                    <div class="vpn-info-item">
-                        <strong>Операторы без обхода:</strong>
-                        <div class="vpn-operators">
-                            ${operatorsWithout.map(op => 
-                                `<span class="operator-tag fail">${escapeHtml(op)}</span>`
-                            ).join('')}
-                        </div>
-                    </div>
-                ` : ''}
-                ${vpn.tariffs && vpn.tariffs.length > 0 ? `
-                    <div class="vpn-tariffs">
-                        <div class="vpn-tariffs-title">Тарифы:</div>
-                        <div class="vpn-tariffs-list">
-                            ${vpn.tariffs.map(tariff => 
-                                `<span class="tariff-item">${escapeHtml(tariff.period)}: ${escapeHtml(tariff.price)}</span>`
-                            ).join('')}
-                        </div>
-                    </div>
-                ` : ''}
-                ${vpn.comment ? `
-                    <div class="vpn-comment">${escapeHtml(vpn.comment)}</div>
-                ` : ''}
             </div>
-            <button class="vpn-link-btn" data-ref-link="${escapeHtml(vpn['ref-link'] || '')}">
-                Перейти по ссылке
-            </button>
+            <div class="vpn-expanded-content">
+                <div class="vpn-header">
+                    <div class="vpn-name">${escapeHtml(vpn.name)}</div>
+                    <div class="vpn-success-rate">${escapeHtml(vpn.success_rate)} работоспос.</div>
+                </div>
+                <div class="vpn-info">
+                    <div class="vpn-info-item">
+                        <strong>Программы:</strong> ${escapeHtml(programs)}
+                    </div>
+                    <div class="vpn-info-item">
+                        <strong>Бесплатный период:</strong> ${escapeHtml(vpn.free_period || 'Не указано')}
+                    </div>
+                    ${operatorsWithBypass.length > 0 ? `
+                        <div class="vpn-info-item">
+                            <strong>Доступные операторы связи:</strong>
+                            <div class="vpn-operators">
+                                ${operatorsWithBypass.map(op => 
+                                    `<span class="operator-tag success">${escapeHtml(op)}</span>`
+                                ).join('')}
+                            </div>
+                        </div>
+                    ` : ''}
+                    ${operatorsWithout.length > 0 ? `
+                        <div class="vpn-info-item">
+                        <strong>Недоступные операторы связи:</strong>
+                            <div class="vpn-operators">
+                                ${operatorsWithout.map(op => 
+                                    `<span class="operator-tag fail">${escapeHtml(op)}</span>`
+                                ).join('')}
+                            </div>
+                        </div>
+                    ` : ''}
+                    ${vpn.tariffs && vpn.tariffs.length > 0 ? `
+                        <div class="vpn-tariffs">
+                            <div class="vpn-tariffs-title">Тарифы:</div>
+                            <div class="vpn-tariffs-list">
+                                ${vpn.tariffs.map(tariff => 
+                                    `<span class="tariff-item">${escapeHtml(tariff.period)}: ${escapeHtml(tariff.price)}</span>`
+                                ).join('')}
+                            </div>
+                        </div>
+                    ` : ''}
+                    ${vpn.comment ? `
+                        <div class="vpn-comment">${escapeHtml(vpn.comment)}</div>
+                    ` : ''}
+                </div>
+                <button class="vpn-link-btn" data-ref-link="${escapeHtml(vpn['ref-link'] || '')}">
+                    Подключить
+                </button>
+            </div>
         `;
         
-        // Обработчик клика на карточку и кнопку
-        const linkBtn = card.querySelector('.vpn-link-btn');
-        linkBtn.addEventListener('click', (e) => {
+        // Обработчик кнопки развернуть/свернуть
+        const expandBtn = card.querySelector('.vpn-expand-btn');
+        expandBtn.addEventListener('click', (e) => {
             e.stopPropagation();
-            const refLink = linkBtn.getAttribute('data-ref-link');
+            const isExpanded = card.classList.contains('expanded');
+            if (isExpanded) {
+                card.classList.remove('expanded');
+                expandBtn.textContent = '▼';
+            } else {
+                card.classList.add('expanded');
+                expandBtn.textContent = 'Свернуть';
+            }
+        });
+        
+        // Обработчик кнопки "Подключить" в свернутом состоянии
+        const connectBtnCollapsed = card.querySelector('.vpn-card-header-right .vpn-connect-btn');
+        connectBtnCollapsed.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const refLink = connectBtnCollapsed.getAttribute('data-ref-link');
+            if (refLink) {
+                window.open(refLink, '_blank');
+            } else {
+                tg.showAlert('Ссылка не указана');
+            }
+        });
+        
+        // Обработчик кнопки "Подключить" в развернутом состоянии
+        const connectBtnExpanded = card.querySelector('.vpn-link-btn');
+        connectBtnExpanded.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const refLink = connectBtnExpanded.getAttribute('data-ref-link');
             if (refLink) {
                 window.open(refLink, '_blank');
             } else {
@@ -261,3 +306,5 @@ if (tg.colorScheme === 'dark') {
 } else {
     document.body.classList.add('light-theme');
 }
+
+

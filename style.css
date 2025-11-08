@@ -37,11 +37,18 @@ body {
     margin: 0 auto;
     padding: 20px 16px;
     min-height: 100vh;
+    display: flex;
+    flex-direction: column;
 }
 
 .screen {
     display: none;
     animation: fadeIn 0.3s ease-in-out;
+}
+
+#mainScreen {
+    flex-direction: column;
+    min-height: 100vh;
 }
 
 .screen.active {
@@ -108,6 +115,20 @@ body {
     flex-direction: column;
     gap: 16px;
     margin-top: 60px;
+    margin-bottom: 40px;
+}
+
+.footer-text {
+    font-family: 'Unbounded', sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    text-align: center;
+    color: var(--text-secondary);
+    opacity: 0.6;
+    letter-spacing: 2px;
+    text-transform: lowercase;
+    margin-top: auto;
+    padding-top: 20px;
 }
 
 .btn {
@@ -248,14 +269,37 @@ body {
     background: var(--card-bg);
     border: 2px solid var(--border-color);
     border-radius: 16px;
-    padding: 20px;
-    transition: all 0.2s ease;
-    cursor: pointer;
+    padding: 16px;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
 }
 
-.vpn-card:active {
-    transform: scale(0.98);
-    border-color: var(--accent-primary);
+.vpn-card.expanded {
+    padding: 20px;
+}
+
+.vpn-card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.vpn-card-header-left {
+    flex: 1;
+    min-width: 0;
+}
+
+.vpn-card-header-right {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+}
+
+.vpn-card.expanded .vpn-card-header-right .vpn-connect-btn {
+    display: none;
 }
 
 .vpn-header {
@@ -274,7 +318,7 @@ body {
 }
 
 .vpn-success-rate {
-    background: linear-gradient(135deg, #3390ec 0%, #6c5ce7 100%);
+    background: linear-gradient(135deg, #3633ec 0%, #d75ce7 100%);
     color: var(--text-primary);
     padding: 6px 12px;
     border-radius: 8px;
@@ -365,6 +409,104 @@ body {
     font-style: italic;
 }
 
+.vpn-collapsed-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.vpn-collapsed-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.vpn-collapsed-name {
+    font-family: 'Unbounded', sans-serif;
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 4px;
+}
+
+.vpn-collapsed-period {
+    font-size: 13px;
+    color: var(--text-secondary);
+}
+
+.vpn-expanded-content {
+    display: none;
+    margin-top: 16px;
+    animation: slideDown 0.3s ease-out;
+}
+
+.vpn-card.expanded .vpn-expanded-content {
+    display: block;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.vpn-expand-btn {
+    background: var(--bg-tertiary);
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
+    padding: 8px 12px;
+    border-radius: 10px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+}
+
+.vpn-expand-btn:active {
+    background: var(--bg-secondary);
+    transform: scale(0.95);
+}
+
+.vpn-expand-btn.expanded {
+    background: var(--bg-secondary);
+}
+
+.vpn-connect-btn {
+    background: linear-gradient(135deg, #3390ec 0%, #6c5ce7 100%);
+    border: none;
+    color: var(--text-primary);
+    padding: 10px 16px;
+    border-radius: 12px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+    box-shadow: 0 0 20px rgba(51, 144, 236, 0.4);
+    animation: glow 2s ease-in-out infinite alternate;
+}
+
+@keyframes glow {
+    from {
+        box-shadow: 0 0 20px rgba(51, 144, 236, 0.4);
+    }
+    to {
+        box-shadow: 0 0 30px rgba(51, 144, 236, 0.6), 0 0 40px rgba(108, 92, 231, 0.4);
+    }
+}
+
+.vpn-connect-btn:active {
+    transform: scale(0.95);
+}
+
 .vpn-link-btn {
     margin-top: 16px;
     width: 100%;
@@ -378,6 +520,8 @@ body {
     font-weight: 600;
     cursor: pointer;
     transition: all 0.2s ease;
+    box-shadow: 0 0 20px rgba(51, 144, 236, 0.4);
+    animation: glow 2s ease-in-out infinite alternate;
 }
 
 .vpn-link-btn:active {
@@ -398,6 +542,30 @@ body {
     .vpn-name {
         font-size: 18px;
     }
+    
+    .vpn-card-header {
+        flex-wrap: wrap;
+    }
+    
+    .vpn-card-header-right {
+        width: 100%;
+        margin-top: 12px;
+        justify-content: space-between;
+    }
+    
+    .vpn-connect-btn,
+    .vpn-expand-btn {
+        flex: 1;
+        min-width: 0;
+    }
+    
+    .vpn-collapsed-name {
+        font-size: 16px;
+    }
+    
+    .vpn-collapsed-period {
+        font-size: 12px;
+    }
 }
 
 /* Скрытие скроллбара для лучшего UX на мобильных */
@@ -413,3 +581,5 @@ body {
     background: var(--bg-tertiary);
     border-radius: 2px;
 }
+
+

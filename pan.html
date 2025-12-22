@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+
+<html lang="ru">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+<title>Pankoff Kombat</title>
+
+
+
+<style>
+
+:root {
+
+  --bg: #0b0c10;
+
+  --card: rgba(255,255,255,0.1);
+
+  --blur: blur(18px);
+
+  --accent: #ffd54f;
+
+  --text: #ffffff;
+
+  --muted: rgba(255,255,255,0.6);
+
+}
+
+
+
+* {
+
+  box-sizing: border-box;
+
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", Roboto, sans-serif;
+
+  -webkit-tap-highlight-color: transparent;
+
+}
+
+
+
+body {
+
+  margin: 0;
+
+  background: radial-gradient(circle at top, #1f1f3a, var(--bg));
+
+  color: var(--text);
+
+  display: flex;
+
+  justify-content: center;
+
+}
+
+
+
+.app {
+
+  width: 100%;
+
+  max-width: 430px;
+
+  padding: 16px;
+
+}
+
+
+
+/* UI */
+
+.card {
+
+  background: var(--card);
+
+  backdrop-filter: var(--blur);
+
+  border-radius: 22px;
+
+  padding: 14px;
+
+  margin-bottom: 14px;
+
+}
+
+
+
+.title {
+
+  text-align: center;
+
+  font-size: 30px;
+
+  font-weight: 900;
+
+}
+
+
+
+.subtitle {
+
+  text-align: center;
+
+  color: var(--muted);
+
+  font-size: 14px;
+
+}
+
+
+
+.balance {
+
+  text-align: center;
+
+}
+
+
+
+.balance .coins {
+
+  font-size: 38px;
+
+  font-weight: 900;
+
+}
+
+
+
+.rank {
+
+  margin-top: 4px;
+
+  font-size: 13px;
+
+  color: var(--accent);
+
+}
+
+
+
+/* CLICKER */
+
+.clicker {
+
+  display: flex;
+
+  justify-content: center;
+
+  margin: 18px 0;
+
+}
+
+
+
+.coin {
+
+  width: 180px;
+
+  height: 180px;
+
+  border-radius: 50%;
+
+  background: radial-gradient(circle at top, #fff3c1, #ffb300);
+
+  box-shadow: inset 0 4px 12px rgba(255,255,255,0.6),
+
+              0 20px 40px rgba(0,0,0,0.6);
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  font-size: 42px;
+
+  font-weight: 900;
+
+  color: #3e2723;
+
+}
+
+
+
+.coin:active {
+
+  transform: scale(0.94);
+
+}
+
+
+
+/* SUPPORTERS */
+
+.supporters {
+
+  display: flex;
+
+  gap: 10px;
+
+  flex-wrap: wrap;
+
+  justify-content: center;
+
+}
+
+
+
+.supporter {
+
+  width: 60px;
+
+  height: 60px;
+
+  border-radius: 16px;
+
+  background: rgba(255,255,255,0.15);
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  font-size: 26px;
+
+}
+
+
+
+/* SHOP */
+
+.shop-item {
+
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: center;
+
+  background: rgba(255,255,255,0.1);
+
+  padding: 12px;
+
+  border-radius: 16px;
+
+  margin-bottom: 10px;
+
+}
+
+
+
+button {
+
+  border: none;
+
+  border-radius: 14px;
+
+  padding: 8px 14px;
+
+  font-weight: 700;
+
+  background: linear-gradient(135deg, #ffd54f, #ffb300);
+
+}
+
+
+
+button:disabled {
+
+  opacity: 0.4;
+
+}
+
+</style>
+
+</head>
+
+
+
+<body>
+
+<div class="app">
+
+
+
+  <div class="title">🥊 Pankoff Kombat</div>
+
+  <div class="subtitle">Тапай → Алексей → Панков</div>
+
+
+
+  <div class="card balance">
+
+    <div class="coins" id="coins">0</div>
+
+    <div class="rank" id="rank">Новичок • lvl 1</div>
+
+  </div>
+
+
+
+  <div class="clicker">
+
+    <div class="coin" id="coin">🪙</div>
+
+  </div>
+
+
+
+  <div class="card">
+
+    <div>🤖 Саппорты (макс. 5)</div>
+
+    <div class="supporters" id="supporters"></div>
+
+  </div>
+
+
+
+  <div class="card">
+
+    <div>🛒 Магазин</div>
+
+
+
+    <div class="shop-item">
+
+      <div>
+
+        <b>Автокликер</b><br>
+
+        <small>+1 / сек</small>
+
+      </div>
+
+      <button id="buySupport">Купить (50)</button>
+
+    </div>
+
+
+
+    <div class="shop-item">
+
+      <div>
+
+        <b>x2 Клик от пупсёныша</b><br>
+
+        <small>30 секунд</small>
+
+      </div>
+
+      <button id="boostClick">100</button>
+
+    </div>
+
+
+
+    <div class="shop-item">
+
+      <div>
+
+        <b>x2 Автоклик от пупсолетуса</b><br>
+
+        <small>30 секунд</small>
+
+      </div>
+
+      <button id="boostAuto">120</button>
+
+    </div>
+
+  </div>
+
+
+
+</div>
+
+
+
+<script>
+
+/* SAVE */
+
+const saveKey = "pankoff_save";
+
+
+
+let state = JSON.parse(localStorage.getItem(saveKey)) || {
+
+  coins: 0,
+
+  total: 0,
+
+  supporters: 0,
+
+  price: 50,
+
+  level: 1,
+
+  boostClick: 1,
+
+  boostAuto: 1
+
+};
+
+
+
+const ranks = [
+
+  "Alexus",
+
+  "Панкович",
+
+  "ВладикПик",
+
+  "Пупс",
+
+  "Пупсолетус+",
+
+  "Алексей Панков Родионович"
+
+];
+
+
+
+const coinsEl = document.getElementById("coins");
+
+const rankEl = document.getElementById("rank");
+
+const supportersEl = document.getElementById("supporters");
+
+
+
+function save() {
+
+  localStorage.setItem(saveKey, JSON.stringify(state));
+
+}
+
+
+
+function updateLevel() {
+
+  state.level = Math.floor(state.total / 500) + 1;
+
+}
+
+
+
+function render() {
+
+  coinsEl.textContent = Math.floor(state.coins);
+
+  const rank = ranks[Math.min(ranks.length - 1, Math.floor(state.level / 5))];
+
+  rankEl.textContent = `${rank} • lvl ${state.level}`;
+
+  save();
+
+}
+
+
+
+document.getElementById("coin").onclick = () => {
+
+  state.coins += 1 * state.boostClick;
+
+  state.total += 1 * state.boostClick;
+
+  updateLevel();
+
+  render();
+
+};
+
+
+
+document.getElementById("buySupport").onclick = () => {
+
+  if (state.coins >= state.price && state.supporters < 5) {
+
+    state.coins -= state.price;
+
+    state.supporters++;
+
+    state.price = Math.floor(state.price * 1.6);
+
+    const s = document.createElement("div");
+
+    s.className = "supporter";
+
+    s.textContent = "🤖";
+
+    supportersEl.appendChild(s);
+
+    render();
+
+  }
+
+};
+
+
+
+document.getElementById("boostClick").onclick = () => {
+
+  if (state.coins >= 100) {
+
+    state.coins -= 100;
+
+    state.boostClick = 2;
+
+    setTimeout(() => state.boostClick = 1, 30000);
+
+    render();
+
+  }
+
+};
+
+
+
+document.getElementById("boostAuto").onclick = () => {
+
+  if (state.coins >= 120) {
+
+    state.coins -= 120;
+
+    state.boostAuto = 2;
+
+    setTimeout(() => state.boostAuto = 1, 30000);
+
+    render();
+
+  }
+
+};
+
+
+
+/* AUTCLICK */
+
+setInterval(() => {
+
+  if (state.supporters > 0) {
+
+    const income = state.supporters * state.boostAuto;
+
+    state.coins += income;
+
+    state.total += income;
+
+    updateLevel();
+
+    render();
+
+  }
+
+}, 1000);
+
+
+
+/* LOAD SUPPORTERS */
+
+for (let i = 0; i < state.supporters; i++) {
+
+  const s = document.createElement("div");
+
+  s.className = "supporter";
+
+  s.textContent = "🤖";
+
+  supportersEl.appendChild(s);
+
+}
+
+
+
+render();
+
+</script>
+
+</body>
+
+</html>

@@ -1,16 +1,18 @@
 {"vpn_list":[
-  {"id":0,"name":"HimikVPN","ref-link":"https://t.me/HimikVPN_bot?start=7254903071","success_rate":"70%",
+  {"id":0,"name":"MagnumVPN","ref-link":"https://t.me/Magnumvpnbot?start=R_lr7fut","success_rate":"70%",
+    "operators_with_bypass":["Все"],"operators_without":["Нет"],"programs":["Happ","V2RayTun"],
+    "free_period":"7 дней","tariffs":[{"period":"Месяц","price":"149 руб"},{"period":"3 месяца","price":"444 руб"},{"period":"6 месяцев","price":"800 руб"},{"period":"Год","price":"1500 руб"}],
+    "comment":"за каждого приглашённого + 15 бесплатный день"},
+  {"id":1,"name":"HimikVPN","ref-link":"https://t.me/HimikVPN_bot?start=7254903071","success_rate":"70%",
     "operators_with_bypass":["Все"],"operators_without":["Нет"],"programs":["Happ","V2RayTun"],
     "free_period":"7 дней","tariffs":[{"period":"Месяц","price":"189 руб"},{"period":"3 месяца","price":"439 руб"},{"period":"6 месяцев","price":"689 руб"},{"period":"Год","price":"999 руб"}],
     "comment":"2 белых списка + за каждого приглашённого + 1 бесплатный день"},
-  {"id":1,"name":"AtlantaVPN","ref-link":"https://t.me/AtlantaVPN_bot?start=ref_6636280901","success_rate":"85%",
+  {"id":2,"name":"AtlantaVPN","ref-link":"https://t.me/AtlantaVPN_bot?start=ref_6636280901","success_rate":"85%",
     "operators_with_bypass":["Все"],"operators_without":["Нет"],"programs":["Happ"],
     "free_period":"3 дня","tariffs":[{"period":"15GB","price":"99 руб"},{"period":"30GB","price":"198 руб"}],
     "comment":"оплачивается по-гигабайтно, ОООЧЕНЬ много серверов, реферал дает 50 рублей на баланс"},
-  {"id":2,"name":"CloudVPN","ref-link":"https://t.me/clouds_vpnbot/cloudvpn?startapp=1473448914","success_rate":"80%",
+  {"id":3,"name":"CloudVPN","ref-link":"https://t.me/clouds_vpnbot/cloudvpn?startapp=1473448914","success_rate":"80%",
     "operators_with_bypass":["Все"],"operators_without":["Нет"],"programs":["V2RayTun"],
     "free_period":"3 дня при подписке на их ТГК","tariffs":[{"period":"Месяц","price":"100 руб"},{"period":"3 месяца","price":"270 руб"}],
     "comment":"работает штатно"}
 ]}
-
-
